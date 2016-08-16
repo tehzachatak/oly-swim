@@ -16,8 +16,7 @@ ScrapeSwim <- function(year, gender, distance, event) {
     read_html %>>%
     html_nodes(css_page) %>>%
     html_table(header = F) %>>%
-    data.frame() %>>%
-    tbl_df() -> total_table
+    data.frame() -> total_table
   total_table <- total_table[1:6]
   total_table %>>%
     filter(X1 == 'Rank') %>>% as.character -> names
@@ -29,5 +28,6 @@ ScrapeSwim <- function(year, gender, distance, event) {
   total_table[9] <- event
   total_table[10] <- distance
   names %>>% tolower -> names(total_table)
+  setDT(total_table)
   return(total_table)
 }
